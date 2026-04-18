@@ -32,7 +32,7 @@ const ProfileCard = ({ coMonitorId }: { coMonitorId: number }) => {
             joinDate: userDetails.createdAt
               ? new Date(userDetails.createdAt).toLocaleDateString()
               : "N/A",
-            image: "/profile (7).png",
+            image: "/img/signup-background.svg",
             city: userDetails.city || "N/A",
             dateOfBirth: userDetails.dateOfBirth
               ? new Date(userDetails.dateOfBirth).toLocaleDateString()
@@ -68,9 +68,10 @@ const ProfileCard = ({ coMonitorId }: { coMonitorId: number }) => {
         <>
           <div className="w-24 h-24 rounded-full overflow-hidden relative">
             <Image
-              src={coMonitor?.image || "/profile(7).png"}
+              src={coMonitor?.image || "/img/signup-background.svg"}
               alt={coMonitor?.name || "Co-Monitor"}
               fill
+              sizes="96px"
               className="rounded-full object-cover"
             />
           </div>

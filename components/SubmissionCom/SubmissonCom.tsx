@@ -106,7 +106,7 @@ const SubmissonCom = ({ id, CoMentorId }: SubmissionIdProps) => {
         <StudentInfoCard
           id={submission?.studentId || 0}
           name={submission?.StudentName || "Unknown"}
-          avatar={submission?.StudentImage || "/profile(6).png"}
+          avatar={submission?.StudentImage || "/img/signup-background.svg"}
           status={submission?.status || "Submitted"}
         />
 
@@ -199,7 +199,7 @@ const SubmissonCom = ({ id, CoMentorId }: SubmissionIdProps) => {
                       <div className="flex justify-between mb-2">
                         <div className="flex items-center gap-2">
                           <Image
-                            src={comment.image || "/profile (7).png"}
+                            src={comment.image || "/img/signup-background.svg"}
                             alt={comment.createdBy || "User"}
                             width={28}
                             height={28}

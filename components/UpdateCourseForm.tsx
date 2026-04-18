@@ -399,6 +399,7 @@ const UpdateCourseForm = ({ monitors, coMonitors }: IProps) => {
           </div>
           <input type="hidden" name="courseId" value={id} />
           <input type="hidden" name="adminId" value={formData.adminId} />
+          <input type="hidden" name="currentImage" value={formData.image} />
           <div className="flex justify-center">
             <button
               type="submit"

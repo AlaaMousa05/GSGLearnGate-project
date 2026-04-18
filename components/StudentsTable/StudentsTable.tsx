@@ -53,7 +53,7 @@ export default function StudentRequestsTable({ coursesList }: IProps) {
                     <td>
                       <PersonCard
                         email={student.email ?? ""}
-                        imageURL={student.image ?? "/profile (1).png"}
+                        imageURL={student.image ?? "/img/signup-background.svg"}
                         name={student.firstName + " " + student.lastName}
                       />
                     </td>

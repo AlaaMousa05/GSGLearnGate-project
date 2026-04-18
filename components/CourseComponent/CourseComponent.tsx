@@ -33,8 +33,14 @@ const CourseComponent = ({ courses }: IProps) => {
       <div className="grid grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] gap-8 w-full">
         {currentCourses.map((course) => {
           const imageUrl =
-            course.image ||
-            "https://pbs.twimg.com/profile_images/1785867863191932928/EpOqfO6d_400x400.png";
+            course.image && (course.image.startsWith("/img/") || course.image.startsWith("http"))
+              ? course.image
+              : "/img/signup-background.svg";
+          const presenterImageUrl =
+            course.presenterImage &&
+            (course.presenterImage.startsWith("/img/") || course.presenterImage.startsWith("http"))
+              ? course.presenterImage
+              : null;
           return (
             <Link
               href={`/course-details/${course.id}`}
@@ -66,7 +72,7 @@ const CourseComponent = ({ courses }: IProps) => {
                 <div className="w-10 h-10 overflow-hidden rounded-full flex items-center justify-center bg-gray-200">
                   {course.presenterImage ? (
                     <Image
-                      src={course.presenterImage}
+                      src={presenterImageUrl || "/img/signup-background.svg"}
                       alt="presenterImage"
                       width={40}
                       height={40}

@@ -67,7 +67,7 @@ export default function StudentRequestsTable({ monitorCoursesList }: IProps) {
                     <td>
                       <PersonCard
                         email={joiningOrder.email ?? ""}
-                        imageURL={joiningOrder.image ?? "/profile (1).png"}
+                        imageURL={joiningOrder.image ?? "/img/signup-background.svg"}
                         name={
                           joiningOrder.firstName + " " + joiningOrder.lastName
                         }

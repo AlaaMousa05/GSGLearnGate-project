@@ -12,7 +12,7 @@ const StudentInfoCard = ({ name, id, status, avatar }: Props) => {
     <div className="bg-white p-4 rounded-lg shadow-sm mb-6 flex justify-between items-center">
       <div className="flex items-center gap-3">
         <Image
-          src={avatar || "/profile (1).png"}
+          src={avatar || "/img/signup-background.svg"}
           alt={name}
           width={44}
           height={44}
