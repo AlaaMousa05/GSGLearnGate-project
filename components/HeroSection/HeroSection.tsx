@@ -7,9 +7,11 @@ export default function HeroSection() {
       <Image
         src="/img/hero-background.png"
         alt="Hero Section"
-        layout="fill"
-        objectFit="cover"
-        className="absolute top-0 left-0 w-full h-full"
+        fill
+        className="absolute top-0 left-0"
+        style={{ objectFit: "cover" }}
+        sizes="100vw"
+        priority
       />
 
       {/* الطبقة الشفافة */}

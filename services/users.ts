@@ -1,3 +1,5 @@
+"use server";
+
 import { insertUser } from "@/src/db/queries/insert";
 import {
   getCoMonitors,

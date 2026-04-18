@@ -82,7 +82,7 @@ export default function CreateTaskForm({ coursesList }: IProps) {
           >
             Task Title
           </label>
-          <input type="hidden" name="co-monitorId" value={user.userId!} />
+          <input type="hidden" name="coMonitorId" value={user.userId!} />
           <input
             type="text"
             name="title"

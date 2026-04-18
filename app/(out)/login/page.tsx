@@ -1,5 +1,4 @@
 import LoginForm from "@/components/Forms/LoginForm/LoginForm";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -7,8 +6,8 @@ const page = () => {
   return (
     <div className="h-dvh flex flex-col justify-center items-center gap-5">
       <div>
-        <Image
-          src={"/img/logo.webp"}
+        <img
+          src="/img/gsgLogo.png"
           alt="Gaza Sky Geeks logo"
           width={70}
           height={70}

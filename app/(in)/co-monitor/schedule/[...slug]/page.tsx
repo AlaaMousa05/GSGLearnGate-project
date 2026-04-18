@@ -108,7 +108,7 @@ export default function AttendanceEvaluationPage() {
                     <td className="px-6 py-4">
                       <PersonCard
                         email={student.email ?? ""}
-                        imageURL={student.image ?? "/profile (1).png"}
+                        imageURL={student.image ?? "/img/signup-background.svg"}
                         name={`${student.firstName} ${student.lastName}`}
                       />
                     </td>

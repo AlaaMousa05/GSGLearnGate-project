@@ -117,7 +117,7 @@ const PublicComments = ({ taskId, roles }: Props) => {
               <div className="flex items-center gap-3">
                 <div className="relative h-10 w-10 rounded-full overflow-hidden  border-orange-300">
                   <Image
-                    src={comment.userImage || "/images/default-user.png"}
+                    src={comment.userImage || "/img/signup-background.svg"}
                     alt={comment.userName || "User"}
                     width={40}
                     height={40}

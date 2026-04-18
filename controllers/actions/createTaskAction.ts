@@ -32,8 +32,9 @@ export async function submitTask(
       };
     }
 
-    const [title, description, dueDate, points, monitorId, courseId, url] =
+    const [title, description, dueDate, points, monitorId, courseId] =
       requiredFields.map((field) => formData.get(field) as string);
+    const url = (formData.get("url") as string | null)?.trim() || "";
     const deadline = new Date(dueDate);
     const newTask = await createTaskByMonitor(
       Number(monitorId),
@@ -45,23 +46,27 @@ export async function submitTask(
       Number(points)
     );
     const file = formData.get("file") as File | null;
-    if (file && file instanceof File && file.size > 0) {
-      const path = await writeFile(file);
-      await addAttachmentForTask(
-        Number(courseId),
-        Number(monitorId),
-        path,
-        newTask.id,
-        Attachments.FILE
-      );
-    } else if (typeof url === "string") {
-      await addAttachmentForTask(
-        Number(courseId),
-        Number(monitorId),
-        url,
-        newTask.id,
-        Attachments.LINK
-      );
+    try {
+      if (file && file instanceof File && file.size > 0) {
+        const path = await writeFile(file);
+        await addAttachmentForTask(
+          Number(courseId),
+          Number(monitorId),
+          path,
+          newTask.id,
+          Attachments.FILE
+        );
+      } else if (url) {
+        await addAttachmentForTask(
+          Number(courseId),
+          Number(monitorId),
+          url,
+          newTask.id,
+          Attachments.LINK
+        );
+      }
+    } catch {
+      // Keep task creation successful even if optional attachment insertion fails.
     }
 
     return {
@@ -101,8 +106,9 @@ export async function submitTaskByCoMonitor(
       };
     }
 
-    const [title, description, dueDate, points, coMentorId, courseId, url] =
+    const [title, description, dueDate, points, coMentorId, courseId] =
       requiredFields.map((field) => formData.get(field) as string);
+    const url = (formData.get("url") as string | null)?.trim() || "";
     const deadline = new Date(dueDate);
     const newTask = await createTaskByCoMonitor(
       Number(coMentorId),
@@ -115,23 +121,27 @@ export async function submitTaskByCoMonitor(
     );
 
     const file = formData.get("file") as File | null;
-    if (file && file instanceof File && file.size > 0) {
-      const path = await writeFile(file);
-      await addAttachmentForTask(
-        Number(courseId),
-        Number(coMentorId),
-        path,
-        newTask.id,
-        Attachments.FILE
-      );
-    } else if (typeof url === "string") {
-      await addAttachmentForTask(
-        Number(courseId),
-        Number(coMentorId),
-        url,
-        newTask.id,
-        Attachments.LINK
-      );
+    try {
+      if (file && file instanceof File && file.size > 0) {
+        const path = await writeFile(file);
+        await addAttachmentForTask(
+          Number(courseId),
+          Number(coMentorId),
+          path,
+          newTask.id,
+          Attachments.FILE
+        );
+      } else if (url) {
+        await addAttachmentForTask(
+          Number(courseId),
+          Number(coMentorId),
+          url,
+          newTask.id,
+          Attachments.LINK
+        );
+      }
+    } catch {
+      // Keep task creation successful even if optional attachment insertion fails.
     }
 
     return {

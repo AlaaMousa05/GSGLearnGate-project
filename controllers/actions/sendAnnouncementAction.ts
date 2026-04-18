@@ -1,3 +1,5 @@
+"use server";
+
 import { sendAnnouncement } from "@/services/announcement";
 
 export type AnnouncementState =

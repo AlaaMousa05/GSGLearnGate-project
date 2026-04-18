@@ -11,10 +11,10 @@ const Hero = ({ course }: IProps) => {
   return (
     <div className="relative w-full h-[500] ">
       <Image
-        src="/img/hero-background.jpg"
+        src="/img/signup-background.svg"
         fill
-        objectFit="cover"
         alt="course image"
+        style={{ objectFit: "cover" }}
       />
       <div className="absolute inset-0 bg-[rgba(0,0,0,.7)]"></div>
 

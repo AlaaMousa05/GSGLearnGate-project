@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -9,9 +8,9 @@ const Footer = () => {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <Link href="/" className="flex items-center">
-              <Image
-                src={"/img/logo.webp"}
-                className="mr-3 h-8"
+              <img
+                src="/img/gsgLogo.png"
+                className="mr-3"
                 alt="FlowBite Logo"
                 width={50}
                 height={50}

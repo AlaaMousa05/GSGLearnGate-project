@@ -1,13 +1,10 @@
 
-import { useAuth } from "@/context/user";
-import { getAnnouncements } from "@/services/announcement";
-import { getCoMonitorCoursesNames } from "@/services/courses";
+"use client";
 import { Announcement } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 export default function useCoMonitorAnnouncements() {
-  const {user}=useAuth()
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -25,16 +22,21 @@ export default function useCoMonitorAnnouncements() {
     async (courseId?: number, page: number = 1) => {
       setIsLoading(true);
       try {
-        const courseData = await getCoMonitorCoursesNames(user.userId!);
-        const courseIds = courseData
-          ? courseData.map((course) => course.courseId)
-          : undefined;
-        const requests = await getAnnouncements(
-          courseId,
-          courseIds,
-          page,
-          pageSize
-        );
+        const params = new URLSearchParams({
+          page: page.toString(),
+          pageSize: pageSize.toString(),
+        });
+        if (courseId !== undefined) {
+          params.set("courseId", courseId.toString());
+        }
+
+        const response = await fetch(`/api/announcements?${params.toString()}`, {
+          cache: "no-store",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch announcements");
+        }
+        const requests = await response.json();
 
         requests && setTotalPages(Math.ceil(requests.total / pageSize));
         setAnnouncements(requests.announcements);

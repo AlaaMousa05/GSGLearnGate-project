@@ -1,3 +1,5 @@
+"use server";
+
 import { getUserByEmail } from "@/src/db/queries/select";
 import { Role } from "@/types";
 import { comparePassword } from "@/utils/crypt";

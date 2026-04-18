@@ -1,3 +1,5 @@
+"use server";
+
 import { insertCoMonitorAvailability } from "@/src/db/queries/insert";
 import { getAllCoMonitorAppointments } from "@/src/db/queries/select";
 import { CoMonitorAppointment } from "@/types/appointments";

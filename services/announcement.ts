@@ -1,3 +1,5 @@
+"use server";
+
 import { insertAnnouncement } from "@/src/db/queries/insert";
 import { getMonitorAnnouncements } from "@/src/db/queries/select";
 

@@ -8,6 +8,7 @@ let db: any | undefined;
 try {
   const connectionUrl = process.env.TURSO_CONNECTION_URL;
   const authToken = process.env.TURSO_AUTH_TOKEN;
+
   if (!connectionUrl || !authToken) {
     throw new Error("CODE:999");
   }
