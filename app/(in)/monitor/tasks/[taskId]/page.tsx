@@ -26,7 +26,7 @@ const page = async ({ params }: IProps) => {
           startedAt={task.startedAt}
           taskId={task.id}
           title={task.title}
-          paths={[submission[0] && submission[0].path]}
+          paths={submission && submission[0] ? [submission[0].path] : []}
         />
         <PublicComments taskId={Number(taskId)} roles={Role.MONITOR} />
       </div>

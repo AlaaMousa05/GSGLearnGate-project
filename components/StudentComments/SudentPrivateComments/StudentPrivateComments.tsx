@@ -1,7 +1,7 @@
 "use client";
 
 import { Comments, StudentName } from "@/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 interface IProps {
@@ -17,7 +17,7 @@ const StudentPrivateComments = (props: IProps) => {
   const [comments, setComments] = useState<Comments[] | null>(props.comments);
   const [submissionId, setSubmissionId] = useState<number | null>(null);
 
-  const fetchSubmission = async () => {
+  const fetchSubmission = useCallback(async () => {
     try {
       const res = await fetch("/api/student/getSubmission", {
         method: "POST",
@@ -43,11 +43,11 @@ const StudentPrivateComments = (props: IProps) => {
     } catch (error) {
       console.error("Error fetching submission:", error);
     }
-  };
+  }, [props.courseId, props.taskId]);
 
   useEffect(() => {
     fetchSubmission();
-  }, [props.courseId, props.taskId]);
+  }, [fetchSubmission]);
 
   const handleClick = async () => {
     if (content !== "" && submissionId !== null) {
@@ -85,6 +85,7 @@ const StudentPrivateComments = (props: IProps) => {
       });
     }
   };
+
   return submissionId ? (
     <section className="bg-white p-6 rounded-xl shadow-md">
       <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">

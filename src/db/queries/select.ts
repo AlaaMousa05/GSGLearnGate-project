@@ -76,7 +76,6 @@ import {
   Role,
   StudentTaskStatus,
   StudentName,
-  SubmissionId,
   SubmissionIdNum,
 } from "@/types/index";
 import { alias } from "drizzle-orm/sqlite-core";

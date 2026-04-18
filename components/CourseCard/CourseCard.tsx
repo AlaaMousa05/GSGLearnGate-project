@@ -1,8 +1,8 @@
-import { StudentCourseBigCard } from "@/types";
+import { StudentCourseBigCard, StudentCourseSmallCard } from "@/types";
 import Link from "next/link";
 
 interface IProps {
-  course: StudentCourseBigCard;
+  course: StudentCourseBigCard | StudentCourseSmallCard;
   studentId: number;
 }
 
