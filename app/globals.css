@@ -42,7 +42,13 @@
     background-image: url("/img/signup-background.svg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: -40px 150px;
+    background-position: center 150px;
     background-color: #1f2328;
+  }
+
+  @media (max-width: 640px) {
+    .bg-signup {
+      background-image: none;
+    }
   }
 }
