@@ -32,7 +32,7 @@ const ProfileCard = ({ coMonitorId }: { coMonitorId: number }) => {
             joinDate: userDetails.createdAt
               ? new Date(userDetails.createdAt).toLocaleDateString()
               : "N/A",
-            image: "/img/signup-background.svg",
+            image: "/profile (7).png",
             city: userDetails.city || "N/A",
             dateOfBirth: userDetails.dateOfBirth
               ? new Date(userDetails.dateOfBirth).toLocaleDateString()
