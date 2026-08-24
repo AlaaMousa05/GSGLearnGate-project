@@ -73,5 +73,19 @@ GSGLearnGate supports multiple user roles with defined permissions, streamlining
 ```git clone https://github.com/AbdallahShnaino/GSGLearnGate.git ```
 
 ``` npm install ``` 
+
+---
+
+## 🔑 Demo Accounts
+
+Use these seeded accounts (via `npm run db:seed`) to try out each role:
+
+| Role | Name | Email | Password |
+|------|------|-------|----------|
+| Admin | Rana Haddad | demo.admin@example.com | `DemoAdmin2026` |
+| Monitor | Omar Jaber | demo.mentor@example.com | `DemoMentor2026` |
+| Co-Monitor | Lina Abu Zayd | demo.commentor@example.com | `DemoCommentor2026` |
+| Student | Yousef Nasser | demo.student@example.com | `DemoStudent2026` |
+
 ## 🤝 Acknowledgments
 GSGLearnGate is developed for Gaza Sky Geeks to support a future of seamless, collaborative, and empowering education.
