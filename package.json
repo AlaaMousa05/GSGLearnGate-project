@@ -29,7 +29,7 @@
     "framer-motion": "^12.5.0",
     "jose": "^6.0.10",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.5.23",
+    "next": "^16.3.2",
     "phosphor-react": "^1.4.1",
     "react": "^19.0.0",
     "react-day-picker": "^9.6.4",
