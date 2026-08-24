@@ -11,7 +11,7 @@
     "db:seed": "tsx seed.ts",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
