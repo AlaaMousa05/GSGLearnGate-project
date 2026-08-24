@@ -61,7 +61,7 @@ const FullCourseCard = (props: IProps) => {
         </div>
         <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
           <span
-            className="block h-full bg-[#FFA41F] rounded-full"
+            className="block h-full bg-primary rounded-full"
             style={{
               width: `${Math.round((completedHours / totalHours) * 100)}%`,
             }}
@@ -91,7 +91,7 @@ const FullCourseCard = (props: IProps) => {
       {props.course.status !== "Finished" && (
         <Link
           href={`/student/my-courses/${props.course.id}`}
-          className="mt-3 px-4 py-2 bg-[#FFA41F] text-white rounded-lg hover:bg-[#FFA41F] transition cursor-pointer flex justify-center"
+          className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition cursor-pointer flex justify-center"
         >
           More Details
         </Link>

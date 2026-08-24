@@ -101,7 +101,7 @@ const SelectStudentAppointmentTime = (props: IProps) => {
       </div>
       <button
         onClick={handleBooking}
-        className="mt-3 px-4 py-2 bg-[#FFA41F] text-white rounded-lg hover:bg-[#FF8C00] transition cursor-pointer flex justify-center"
+        className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition cursor-pointer flex justify-center"
         disabled={!selectedDate}
       >
         Confirm Booking

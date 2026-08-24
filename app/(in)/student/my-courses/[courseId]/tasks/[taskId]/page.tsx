@@ -21,13 +21,14 @@ const Task = async (props: IProps) => {
   const studentName = await getStudentNameById(Number(studentId));
   const submissionId = await getSubmissionIdByTaskId(
     Number(courseId),
-    Number(taskId)
+    Number(taskId),
+    Number(studentId)
   );
 
   return (
-    <div className="min-h-screen bg-[#FFF5E8] p-6 w-full">
+    <div className="min-h-screen p-6 w-full">
       <header className="mb-8">
-        <h1 className="text-2xl font-bold text-[#FFA41F]">
+        <h1 className="text-2xl font-bold text-gray-800">
           {taskDetails![0].courseTitle}
         </h1>
 
@@ -35,8 +36,8 @@ const Task = async (props: IProps) => {
           Exercise 1: {taskDetails![0].taskTitle}
         </p>
 
-        <div className="mt-4 bg-[#FFF6E0] p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold text-[#FFA41F]">Details</h2>
+        <div className="mt-4 bg-vital p-4 rounded-lg shadow">
+          <h2 className="text-lg font-semibold text-primary">Details</h2>
           <p className="text-sm text-neutral-700">
             Created By: {taskDetails![0].creator}
           </p>
@@ -78,7 +79,7 @@ const Task = async (props: IProps) => {
       <div className="lg:flex lg:gap-8">
         <div className="flex-grow lg:w-2/3 space-y-8">
           <section className="bg-white p-6 rounded-xl shadow-md flex-grow">
-            <h2 className="text-xl font-semibold text-[#FFA41F] mb-2">
+            <h2 className="text-xl font-semibold text-primary mb-2">
               Description
             </h2>
             <p className="text-sm text-neutral-700 leading-6">

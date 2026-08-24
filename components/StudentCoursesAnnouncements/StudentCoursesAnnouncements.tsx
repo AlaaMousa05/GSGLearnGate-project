@@ -73,13 +73,13 @@ const StudentCoursesAnnouncements = (props: IProps) => {
             key={announcement.id}
           >
             <div className="flex justify-between items-center max-md:flex-col max-md:gap-3 max-md:items-start">
-              <h3 className="text-2xl font-semibold text-[#FFA41F]">
+              <h3 className="text-2xl font-semibold text-primary">
                 {announcement.courseTitle}
               </h3>
-              <h3 className="text-xl font-semibold text-[#E99375]">
+              <h3 className="text-xl font-semibold text-secondary">
                 {announcement.title}
               </h3>
-              <p className="text-[#E99375] my-2">
+              <p className="text-secondary my-2">
                 {new Date(announcement.createdAt!).toLocaleDateString("en-GB", {
                   year: "numeric",
                   month: "2-digit",

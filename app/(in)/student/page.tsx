@@ -25,7 +25,7 @@ const Dashboard = async () => {
             className="self-end max-sm:self-center max-sm:w-full"
             href={`/student/my-courses`}
           >
-            <button className="px-10 py-2 bg-[#FFA41F] text-white rounded-lg hover:bg-[#FF8C00] transition cursor-pointer max-sm:w-full">
+            <button className="px-10 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition cursor-pointer max-sm:w-full">
               Show All
             </button>
           </Link>
@@ -49,7 +49,7 @@ const Dashboard = async () => {
                 You are registered for {totalCourses?.length} courses
               </h3>
               <Link href={`/student/my-courses`}>
-                <button className="mt-3 px-4 py-2 bg-[#FFA41F] text-white rounded-lg hover:bg-[#FF8C00] transition cursor-pointer w-full sm:w-auto">
+                <button className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition cursor-pointer w-full sm:w-auto">
                   Show All Courses
                 </button>
               </Link>
@@ -60,7 +60,7 @@ const Dashboard = async () => {
                 You are not register in any course
               </h3>
               <Link href={`/student/coming-soon-courses`}>
-                <button className="mt-3 px-4 py-2 bg-[#FFA41F] text-white rounded-lg hover:bg-[#FF8C00] transition cursor-pointer w-full sm:w-auto">
+                <button className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition cursor-pointer w-full sm:w-auto">
                   Show available courses to register
                 </button>
               </Link>

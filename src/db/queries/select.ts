@@ -1891,7 +1891,8 @@ export async function getCommentsByTaskId(
 
 export async function getSubmissionIdByTaskId(
   courseId: number,
-  TaskId: number
+  TaskId: number,
+  studentId: number
 ): Promise<{ submissionId: number }[] | null> {
   const SubmissionId = await db
     .select({
@@ -1900,7 +1901,13 @@ export async function getSubmissionIdByTaskId(
     .from(submissionsTable)
     .innerJoin(tasksTable, eq(tasksTable.id, submissionsTable.taskId))
     .innerJoin(coursesTable, eq(coursesTable.id, tasksTable.courseId))
-    .where(and(eq(coursesTable.id, courseId), eq(tasksTable.id, TaskId)));
+    .where(
+      and(
+        eq(coursesTable.id, courseId),
+        eq(tasksTable.id, TaskId),
+        eq(submissionsTable.studentId, studentId)
+      )
+    );
 
   return SubmissionId ? SubmissionId : null;
 }
@@ -2296,7 +2303,8 @@ export async function getStudentNameById(
 
 export async function getSubmissionByCourseAndTask(
   courseId: number,
-  taskId: number
+  taskId: number,
+  studentId: number
 ): Promise<SubmissionIdNum | null> {
   const result = await db
     .select({
@@ -2305,6 +2313,12 @@ export async function getSubmissionByCourseAndTask(
     .from(submissionsTable)
     .innerJoin(coursesTable, eq(coursesTable.id, submissionsTable.courseId))
     .innerJoin(tasksTable, eq(tasksTable.courseId, coursesTable.id))
-    .where(and(eq(tasksTable.id, taskId), eq(coursesTable.id, courseId)));
+    .where(
+      and(
+        eq(tasksTable.id, taskId),
+        eq(coursesTable.id, courseId),
+        eq(submissionsTable.studentId, studentId)
+      )
+    );
   return result ? result[0] : null;
 }

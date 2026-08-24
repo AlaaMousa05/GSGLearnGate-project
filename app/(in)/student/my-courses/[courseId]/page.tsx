@@ -65,7 +65,7 @@ const CourseDetails = async (props: IProps) => {
     ((attendancesNumber ? attendancesNumber * 2 : 0) / completedHours) * 100;
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#FFF5E8]">
+    <div className="w-full flex flex-col min-h-screen">
       <header className="w-full bg-white shadow px-6 py-4 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">
@@ -84,7 +84,7 @@ const CourseDetails = async (props: IProps) => {
         <div>
           <Link
             href={`/student/my-courses/${courseId}/booking`}
-            className="px-4 py-2 text-sm sm:text-base text-white bg-[#E99375] hover:bg-[#FF8700] rounded-lg font-semibold shadow-md transition-all duration-300 focus:ring-2 focus:ring-[#FFA41F] focus:ring-offset-2"
+            className="px-4 py-2 text-sm sm:text-base text-white bg-primary hover:bg-primary-hover rounded-lg font-semibold shadow-md transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Book an interview
           </Link>
@@ -94,12 +94,12 @@ const CourseDetails = async (props: IProps) => {
       <div className="flex flex-1 flex-col lg:flex-row">
         <main className="flex-1 p-6">
           <section id="overview" className="mb-10">
-            <h2 className="text-2xl font-bold text-[#FFA41F]">Description</h2>
+            <h2 className="text-2xl font-bold text-primary">Description</h2>
             <p className="text-gray-600 mt-2">{courseData![0].description}</p>
           </section>
 
           <section id="assignments" className="mb-10">
-            <h2 className="text-2xl font-bold text-[#FFA41F]">Assignments</h2>
+            <h2 className="text-2xl font-bold text-primary">Assignments</h2>
             <div className="space-y-4">
               {courseTasks && courseTasks.length > 0 ? (
                 courseTasks.map((task, index) => {
@@ -123,7 +123,7 @@ const CourseDetails = async (props: IProps) => {
               <div className="flex justify-center sm:justify-end  mt-4 mb-6">
                 <Link
                   href={`/student/my-courses/${courseId}/tasks`}
-                  className="px-4 py-2 text-sm sm:text-base text-white bg-[#FFA41F] hover:bg-[#FF8700] rounded-lg font-semibold shadow-md transition-all duration-300 focus:ring-2 focus:ring-[#FFA41F] focus:ring-offset-2"
+                  className="px-4 py-2 text-sm sm:text-base text-white bg-primary hover:bg-primary-hover rounded-lg font-semibold shadow-md transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                   Show Details
                 </Link>
@@ -132,7 +132,7 @@ const CourseDetails = async (props: IProps) => {
           </section>
 
           <section id="progress" className="mb-10">
-            <h2 className="text-2xl font-bold text-[#FFA41F]">Progress</h2>
+            <h2 className="text-2xl font-bold text-primary">Progress</h2>
             <div className="mt-4">
               <div className="flex justify-between items-center">
                 <p className="text-gray-700">Course Completion</p>
@@ -142,7 +142,7 @@ const CourseDetails = async (props: IProps) => {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
                 <div
-                  className="h-full bg-[#FFA41F] rounded-full"
+                  className="h-full bg-primary rounded-full"
                   style={{
                     width: `${Math.round(
                       (completedHours / totalHours) * 100
@@ -155,7 +155,7 @@ const CourseDetails = async (props: IProps) => {
 
           {completedHours !== 0 && (
             <section id="attendance" className="mb-10">
-              <h2 className="text-2xl font-bold text-[#FFA41F]">Attendance</h2>
+              <h2 className="text-2xl font-bold text-primary">Attendance</h2>
               <div className="mt-4">
                 <div className="flex justify-between items-center">
                   <p className="text-gray-700">Attendance Rate</p>
@@ -163,7 +163,7 @@ const CourseDetails = async (props: IProps) => {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
                   <div
-                    className="h-full bg-[#E99375] rounded-full"
+                    className="h-full bg-primary rounded-full"
                     style={{
                       width: `${Math.round(attendance)}%`,
                     }}

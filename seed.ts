@@ -1,5 +1,6 @@
 import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/libsql";
+import { eq } from "drizzle-orm";
 import {
   courseSchedulesTable,
   coursesTable,
@@ -16,10 +17,62 @@ import {
   monitorsTable,
   coMonitorsTable,
   studentsTable,
+  usersTable,
 } from "./src/db/schema";
-import { Difficulty, Status, AssignmentStatus, Attachments } from "@/types/index";
+import { Difficulty, Status, AssignmentStatus, Attachments, Role } from "@/types/index";
+import { hashPassword } from "./utils/crypt";
 
 config({ path: ".env" });
+
+// Realistic demo accounts, one per role. Passwords satisfy the app's
+// signup validation (8+ chars, at least one letter and one digit).
+const DEMO_ACCOUNTS = [
+  {
+    role: Role.ADMIN,
+    email: "demo.admin@example.com",
+    password: "DemoAdmin2026",
+    firstName: "Rana",
+    lastName: "Haddad",
+    city: "Gaza",
+  },
+  {
+    role: Role.MONITOR,
+    email: "demo.mentor@example.com",
+    password: "DemoMentor2026",
+    firstName: "Omar",
+    lastName: "Jaber",
+    city: "Gaza",
+  },
+  {
+    role: Role.CO_MONITOR,
+    email: "demo.commentor@example.com",
+    password: "DemoCommentor2026",
+    firstName: "Lina",
+    lastName: "Abu Zayd",
+    city: "Khan Younis",
+  },
+  {
+    role: Role.STUDENT,
+    email: "demo.student@example.com",
+    password: "DemoStudent2026",
+    firstName: "Yousef",
+    lastName: "Nasser",
+    city: "Rafah",
+  },
+] as const;
+
+function daysFromNow(days: number): Date {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+const roleTable = {
+  [Role.ADMIN]: adminsTable,
+  [Role.MONITOR]: monitorsTable,
+  [Role.CO_MONITOR]: coMonitorsTable,
+  [Role.STUDENT]: studentsTable,
+};
 
 async function main() {
   const db = drizzle({
@@ -29,33 +82,97 @@ async function main() {
     },
   });
 
-  const [adminRow] = await db.select().from(adminsTable).limit(1);
-  const [monitorRow] = await db.select().from(monitorsTable).limit(1);
-  const [coMonitorRow] = await db.select().from(coMonitorsTable).limit(1);
-  const [studentRow] = await db.select().from(studentsTable).limit(1);
+  // Create (or reuse) one demo user per role, idempotently by email.
+  console.log("⏳ Ensuring demo accounts exist...");
+  const demoUsers: Record<string, { userId: number; roleRowId: number }> = {};
 
-  if (!adminRow || !monitorRow || !coMonitorRow || !studentRow) {
-    throw new Error(
-      "Missing required base users. Ensure admin, monitor, co-monitor, and student records exist before seeding."
-    );
+  for (const account of DEMO_ACCOUNTS) {
+    const [existingUser] = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, account.email))
+      .limit(1);
+
+    let userId: number;
+    if (existingUser) {
+      userId = existingUser.id;
+      console.log(`↷ Demo ${account.role} already exists: ${account.email}`);
+    } else {
+      const hashedPassword = await hashPassword(account.password);
+      const [insertedUser] = await db
+        .insert(usersTable)
+        .values({
+          firstName: account.firstName,
+          lastName: account.lastName,
+          email: account.email,
+          password: hashedPassword,
+          dateOfBirth: new Date("1995-01-01"),
+          image: "/avatar-placeholder.png",
+          role: account.role,
+          city: account.city,
+        })
+        .returning();
+      userId = insertedUser.id;
+      console.log(`✅ Created demo ${account.role}: ${account.email}`);
+    }
+
+    const table = roleTable[account.role];
+    const [existingRoleRow] = await db
+      .select()
+      .from(table)
+      .where(eq(table.userId, userId))
+      .limit(1);
+
+    let roleRowId: number;
+    if (existingRoleRow) {
+      roleRowId = existingRoleRow.id;
+    } else {
+      const [insertedRoleRow] = await db
+        .insert(table)
+        .values({ userId })
+        .returning();
+      roleRowId = insertedRoleRow.id;
+    }
+
+    demoUsers[account.role] = { userId, roleRowId };
   }
+
+  const adminRow = { id: demoUsers[Role.ADMIN].roleRowId, userId: demoUsers[Role.ADMIN].userId };
+  const monitorRow = { id: demoUsers[Role.MONITOR].roleRowId, userId: demoUsers[Role.MONITOR].userId };
+  const coMonitorRow = { id: demoUsers[Role.CO_MONITOR].roleRowId, userId: demoUsers[Role.CO_MONITOR].userId };
+  const studentRow = { id: demoUsers[Role.STUDENT].roleRowId, userId: demoUsers[Role.STUDENT].userId };
 
   const adminUserId = adminRow.userId;
   const monitorUserId = monitorRow.userId;
   const studentUserId = studentRow.userId;
+
+  const [existingDemoCourse] = await db
+    .select()
+    .from(coursesTable)
+    .where(eq(coursesTable.monitorId, monitorRow.id))
+    .limit(1);
+
+  if (existingDemoCourse) {
+    console.log(
+      "↷ Demo course data already exists for the demo monitor — skipping course/task/submission/etc. re-seeding to avoid duplicates."
+    );
+    console.log("\n✨ Demo accounts are ready.");
+    return;
+  }
 
   // 1. Add courses
   console.log("⏳ Inserting courses...");
   const course1Data = {
     title: "Web Development Fundamentals",
     description: "Learn the basics of web development including HTML, CSS, and JavaScript.",
-    image: "/course-web.png",
+    image:
+      "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800&q=80",
     difficulty: Difficulty.BEGINNER,
     duration: 30,
-    applyStartDate: new Date("2026-04-01"),
-    applyEndDate: new Date("2026-04-15"),
-    courseStartDate: new Date("2026-05-01"),
-    courseEndDate: new Date("2026-06-01"),
+    applyStartDate: daysFromNow(-60),
+    applyEndDate: daysFromNow(-40),
+    courseStartDate: daysFromNow(-24),
+    courseEndDate: daysFromNow(36),
     monitorId: monitorRow.id,
     coMonitorId: coMonitorRow.id,
     adminId: adminRow.id,
@@ -150,18 +267,26 @@ async function main() {
     {
       title: "HTML Basics",
       description: "Create a simple HTML page with essential elements.",
-      creatorId: monitorUserId,
+      creatorId: monitorRow.id,
       courseId: course1.id,
-      deadline: new Date("2026-05-08"),
+      deadline: daysFromNow(-10),
       points: 10,
     },
     {
       title: "Styling with CSS",
       description: "Apply CSS styling to the previously created HTML page.",
-      creatorId: monitorUserId,
+      creatorId: monitorRow.id,
       courseId: course1.id,
-      deadline: new Date("2026-05-15"),
+      deadline: daysFromNow(6),
       points: 15,
+    },
+    {
+      title: "Practice Exercise: JS Selectors",
+      description: "Bonus practice exercise assigned by the co-monitor.",
+      creatorId: coMonitorRow.id,
+      courseId: course1.id,
+      deadline: daysFromNow(4),
+      points: 5,
     },
   ];
 
@@ -263,7 +388,7 @@ async function main() {
     {
       coMonitorId: coMonitorRow.id,
       courseId: course1.id,
-      date: new Date("2026-05-10"),
+      date: daysFromNow(4),
       startTime: "14:00",
       endTime: "16:00",
       isBooked: false,
@@ -271,7 +396,7 @@ async function main() {
     {
       coMonitorId: coMonitorRow.id,
       courseId: course1.id,
-      date: new Date("2026-05-12"),
+      date: daysFromNow(2),
       startTime: "17:00",
       endTime: "19:00",
       isBooked: true,
@@ -304,10 +429,33 @@ async function main() {
     .returning();
   console.log(`✅ Added ${insertedAttendance.length} attendance records`);
 
+  // 12. Add a second, not-yet-started course the demo student hasn't
+  // joined, so the "Coming Soon Courses" page has something to show.
+  console.log("⏳ Inserting upcoming course...");
+  const course2Data = {
+    title: "Data Analysis with Python",
+    description: "Get started with data analysis using Python, pandas, and visualization tools.",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    difficulty: Difficulty.INTERMEDIATE,
+    duration: 45,
+    applyStartDate: daysFromNow(-5),
+    applyEndDate: daysFromNow(20),
+    courseStartDate: daysFromNow(30),
+    courseEndDate: daysFromNow(75),
+    monitorId: monitorRow.id,
+    coMonitorId: coMonitorRow.id,
+    adminId: adminRow.id,
+    details: "Hands-on introduction to data analysis and visualization.",
+    entryRequirements: "Basic Python knowledge.",
+  };
+  const [course2] = await db.insert(coursesTable).values(course2Data).returning();
+  console.log(`✅ Created course: ${course2.title}`);
+
   console.log("\n✨ All seed data inserted successfully!");
   console.log(`
   📊 Insert summary:
-  - Courses: 1
+  - Courses: 2
   - Course sessions: ${sessions.length}
   - Announcements: ${insertedAnnouncements.length}
   - Joining requests: ${insertedRequests.length}

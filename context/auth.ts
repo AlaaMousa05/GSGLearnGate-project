@@ -1,6 +1,6 @@
 "use server";
-import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { verifyToken } from "@/utils/jwt-edge";
 
 export interface DecodedToken {
   email?: string;
@@ -21,18 +21,14 @@ export async function getUserFromToken(
 ): Promise<AuthUser | null> {
   if (!token) return null;
 
-  try {
-    const decodedToken = jwt.decode(token) as DecodedToken | null;
-    if (decodedToken) {
-      return {
-        email: decodedToken.email || "",
-        role: decodedToken.role || "",
-        userId: Number(decodedToken.userId) || -1,
-        id: Number(decodedToken.id) || -1,
-      };
-    }
-  } catch {
-    throw new Error("CODE:1009");
+  const decodedToken = (await verifyToken(token)) as DecodedToken | null;
+  if (decodedToken) {
+    return {
+      email: decodedToken.email || "",
+      role: decodedToken.role || "",
+      userId: Number(decodedToken.userId) || -1,
+      id: Number(decodedToken.id) || -1,
+    };
   }
   return null;
 }

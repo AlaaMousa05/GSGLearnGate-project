@@ -1,54 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  :root {
-    --background: #ffffff;
-    --foreground: #171717;
-    --font-oxygen: "Oxygen", sans-serif;
-    --primary-color: #ffa41f;
-    --secondary-color: #e99375;
-    --vital-color: #fff5e7;
-  }
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-oxygen: "Oxygen", sans-serif;
+  --primary-color: #ffa41f;
+  --primary-hover-color: #ff8c00;
+  --secondary-color: #e99375;
+  --secondary-hover-color: #d96b4e;
+  --vital-color: #fff5e8;
+  --page-background: #ffffff;
+}
 
-  /*@theme inline {
+@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-oxygen);
+  --color-primary: var(--primary-color);
+  --color-primary-hover: var(--primary-hover-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-hover: var(--secondary-hover-color);
+  --color-vital: var(--vital-color);
+  --color-page: var(--page-background);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--background);
+  color: var(--foreground);
+
+  font-family: var(--font-oxygen);
 }
+
+::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-*/
-  body {
-    background: var(--background);
-    color: var(--foreground);
+.bg-signup {
+  background-image: url("/img/signup-background.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 150px;
+  background-color: #1f2328;
+}
 
-    font-family: var(--font-oxygen);
-  }
-
-  ::-webkit-outer-spin-button,
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
+@media (max-width: 640px) {
   .bg-signup {
-    background-image: url("/img/signup-background.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center 150px;
-    background-color: #1f2328;
-  }
-
-  @media (max-width: 640px) {
-    .bg-signup {
-      background-image: none;
-    }
+    background-image: none;
   }
 }

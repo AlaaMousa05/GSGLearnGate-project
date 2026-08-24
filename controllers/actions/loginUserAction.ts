@@ -63,12 +63,22 @@ export async function loginUser(
     const token = generateToken({ userId: authenticatedUser.userId, email, role:authenticatedUser.role, id: authenticatedUser.id });
 
     const cookieStore = await cookies();
+    // NOTE: not httpOnly because context/user.tsx (AuthProvider) decodes this
+    // cookie client-side to populate the logged-in user in ~13 components/hooks.
+    // Authorization no longer trusts this cookie's contents (see middleware.ts /
+    // context/auth.ts, which verify the JWT signature server-side instead).
     cookieStore.set("token", token, {
       secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       path: "/",
       maxAge: 7 * 24 * 60 * 60,
     });
-    cookieStore.set("role", String(authenticatedUser.role));
+    cookieStore.set("role", String(authenticatedUser.role), {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60,
+    });
     return {
       success: true,
       message: "Login Successfully",

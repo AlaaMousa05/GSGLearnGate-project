@@ -8,12 +8,18 @@ interface IProps {
   course: CourseWithPresenter;
 }
 const Hero = ({ course }: IProps) => {
+  const imageUrl =
+    course.image &&
+    (course.image.startsWith("/img/") || course.image.startsWith("http"))
+      ? course.image
+      : "/img/signup-background.svg";
+
   return (
     <div className="relative w-full h-[500] ">
       <Image
-        src="/img/signup-background.svg"
+        src={imageUrl}
         fill
-        alt="course image"
+        alt={`${course.title} cover image`}
         style={{ objectFit: "cover" }}
       />
       <div className="absolute inset-0 bg-[rgba(0,0,0,.7)]"></div>

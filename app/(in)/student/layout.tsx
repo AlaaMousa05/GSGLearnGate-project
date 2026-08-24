@@ -43,7 +43,7 @@ export default async function StudentLayout({
           },
         ]}
       />
-      {children}
+      <div className="flex-1 min-w-0 bg-page min-h-screen">{children}</div>
     </div>
   );
 }

@@ -45,7 +45,7 @@ const SoonCourseDetails = (props: IProps) => {
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-gray-50 p-8">
-      <div className="bg-gradient-to-r from-[#FFA41F] to-[#FF8C1A] p-6 rounded-2xl text-white shadow-lg mb-8">
+      <div className="bg-gradient-to-r from-primary to-primary-hover p-6 rounded-2xl text-white shadow-lg mb-8">
         <h2 className="text-4xl font-bold">{props.courseData![0].title}</h2>
       </div>
 
@@ -101,14 +101,14 @@ const SoonCourseDetails = (props: IProps) => {
         <div className="mt-8 flex justify-center">
           <button
             onClick={handleRegister}
-            className="px-8 py-3 bg-[#FFA41F] text-white text-lg rounded-xl shadow-xl hover:bg-[#FF8C1A] transition-all ease-in-out duration-300 transform hover:scale-105"
+            className="px-8 py-3 bg-primary text-white text-lg rounded-xl shadow-xl hover:bg-primary-hover transition-all ease-in-out duration-300 transform hover:scale-105"
           >
             Register for the Course
           </button>
         </div>
       ) : (
         <div className="mt-8 flex justify-center">
-          <div className="px-8 py-3 bg-[#E99375] text-white text-lg rounded-xl shadow-xl">
+          <div className="px-8 py-3 bg-secondary text-white text-lg rounded-xl shadow-xl">
             Your Request to join course is sent
           </div>
         </div>

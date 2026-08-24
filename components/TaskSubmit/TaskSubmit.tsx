@@ -110,13 +110,13 @@ const TaskSubmit = (props: IProps) => {
     <>
       {loading ? (
         <section className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             Loading...
           </h2>
         </section>
       ) : new Date(props.deadline) < new Date() && !attachment![0]?.path ? (
         <section className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             Task Time Expired
           </h2>
         </section>
@@ -124,7 +124,7 @@ const TaskSubmit = (props: IProps) => {
         attachment.length >= 1 &&
         attachment![0].path.startsWith("/uploads") ? (
         <section className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             Your Submitted Attachment:{" "}
             <a
               href={attachment![0].path}
@@ -136,9 +136,9 @@ const TaskSubmit = (props: IProps) => {
             </a>
           </h2>
           {attachment![0]?.feedback && (
-            <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">
+            <h2 className="text-xl font-semibold text-primary mb-4">
               Co-Monitor Feedback:{" "}
-              <span className="text-[#E99375]">{attachment![0].feedback}</span>
+              <span className="text-secondary">{attachment![0].feedback}</span>
             </h2>
           )}
         </section>
@@ -146,7 +146,7 @@ const TaskSubmit = (props: IProps) => {
         attachment.length >= 1 &&
         !attachment![0].path.startsWith("/uploads") ? (
         <section className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             Your Submitted Attachment:{" "}
             <a
               href={attachment![0].path}
@@ -158,15 +158,15 @@ const TaskSubmit = (props: IProps) => {
             </a>
           </h2>
           {attachment![0].feedback && (
-            <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">
+            <h2 className="text-xl font-semibold text-primary mb-4">
               Co-Monitor Feedback:{" "}
-              <span className="text-[#E99375]">{attachment![0].feedback}</span>
+              <span className="text-secondary">{attachment![0].feedback}</span>
             </h2>
           )}
         </section>
       ) : (
         <section className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold text-[#FFA41F] mb-4">
+          <h2 className="text-xl font-semibold text-primary mb-4">
             Submit Your Work
           </h2>
           <form onSubmit={handleFormSubmit} className="space-y-6">
@@ -179,7 +179,7 @@ const TaskSubmit = (props: IProps) => {
               </label>
               <select
                 id="submissionType"
-                className="w-full p-3 border border-[#E99375] rounded-lg focus:ring-2 focus:ring-[#FFA41F] focus:outline-none"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
                 value={submissionType}
                 onChange={handleSubmissionType}
               >
@@ -201,7 +201,7 @@ const TaskSubmit = (props: IProps) => {
                     Enter the Link
                   </h3>
                   <input
-                    className="w-full p-4 border border-[#E99375] rounded-lg focus:ring-2 focus:ring-[#FFA41F] focus:outline-none"
+                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
                     placeholder="Paste your link here..."
                     onChange={handleLinkChange}
                   ></input>
@@ -215,7 +215,7 @@ const TaskSubmit = (props: IProps) => {
                     </button>
                     <button
                       type="button"
-                      className="px-6 py-2 bg-[#FFA41F] text-white rounded-lg font-semibold hover:bg-[#FF8700] transition"
+                      className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-hover transition"
                       onClick={() => setShowPopup(null)}
                     >
                       Save
@@ -236,7 +236,7 @@ const TaskSubmit = (props: IProps) => {
                   </h3>
                   <input
                     type="file"
-                    className="w-full p-3 border border-[#E99375] rounded-lg focus:ring-2 focus:ring-[#FFA41F] focus:outline-none"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
                     onChange={handleFileChange}
                     name="file"
                   />
@@ -250,7 +250,7 @@ const TaskSubmit = (props: IProps) => {
                     </button>
                     <button
                       type="button"
-                      className="px-6 py-2 bg-[#FFA41F] text-white rounded-lg font-semibold hover:bg-[#FF8700] transition"
+                      className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-hover transition"
                       onClick={() => setShowPopup(null)}
                     >
                       Save
@@ -269,7 +269,7 @@ const TaskSubmit = (props: IProps) => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="px-8 py-3 bg-[#E99375] text-white rounded-lg font-semibold shadow hover:bg-[#D96B4E] transition"
+                className="px-8 py-3 bg-primary text-white rounded-lg font-semibold shadow hover:bg-primary-hover transition"
               >
                 Submit
               </button>

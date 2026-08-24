@@ -1,26 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "@/utils/auth";
+import { verifyToken } from "@/utils/jwt-edge";
 import { Role } from "@/types";
 
-const protectedRoutes = ["/", "/monitor", "/admin", "/co-mentor", "/student"];
+const protectedRoutes = ["/", "/monitor", "/admin", "/co-monitor", "/student"];
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-  const role = request.cookies.get("role")?.value;
 
   const isProtected = protectedRoutes.some((route) =>
     request.nextUrl.pathname.startsWith(route)
   );
   if (isProtected) {
     if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
     }
 
-    const user = verifyToken(token);
+    const payload = await verifyToken(token);
 
-    if (!user) {
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (!payload) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
     }
+
+    const role = payload.role as string | undefined;
 
     const currentPath = request.nextUrl.pathname;
 
@@ -32,7 +37,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/unauthorized", request.url));
     }
 
-    if (currentPath.startsWith("/co-mentor") && role !== Role.CO_MONITOR) {
+    if (currentPath.startsWith("/co-monitor") && role !== Role.CO_MONITOR) {
       return NextResponse.redirect(new URL("/unauthorized", request.url));
     }
 

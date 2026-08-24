@@ -5,8 +5,19 @@ import {
 } from "@/controllers/actions/loginUserAction";
 import Link from "next/link";
 import React, { useActionState, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Role } from "@/types";
+
+const roleHome: Record<Role, string> = {
+  [Role.ADMIN]: "/admin",
+  [Role.MONITOR]: "/monitor",
+  [Role.CO_MONITOR]: "/co-monitor",
+  [Role.STUDENT]: "/student",
+};
+
+function isSafeRedirect(path: string | null, homePrefix: string): path is string {
+  return !!path && path.startsWith(homePrefix);
+}
 
 const initialState: LoginUserStatus = {
   success: false,
@@ -21,28 +32,20 @@ const LoginForm = () => {
   const [formState, action] = useActionState(loginUser, initialState);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (formState.success) {
       setLoading(true);
-      switch (formState.role) {
-        case Role.ADMIN:
-          router.push("/admin");
-          break;
-        case Role.MONITOR:
-          router.push("/monitor");
-          break;
-        case Role.CO_MONITOR:
-          router.push("/co-monitor");
-          break;
-        case Role.STUDENT:
-          router.push("/student");
-          break;
-        default:
-          router.push("");
+      const home = formState.role ? roleHome[formState.role] : undefined;
+      if (!home) {
+        router.push("/");
+        return;
       }
+      const redirect = searchParams.get("redirect");
+      router.push(isSafeRedirect(redirect, home) ? redirect : home);
     }
-  }, [formState.success, formState.role, router]);
+  }, [formState.success, formState.role, router, searchParams]);
 
   return (
     <form

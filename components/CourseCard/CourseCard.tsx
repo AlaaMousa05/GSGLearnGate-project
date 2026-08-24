@@ -60,7 +60,7 @@ const CourseCard = async (props: IProps) => {
 
         <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
           <span
-            className={`block h-full bg-[#FFA41F] rounded-full`}
+            className={`block h-full bg-primary rounded-full`}
             style={{ width: `${completedHours / totalHours}%` }}
           ></span>
         </div>
@@ -73,7 +73,7 @@ const CourseCard = async (props: IProps) => {
         </p>
         <Link
           href={`/student/my-courses/${props.course.id}`}
-          className="mt-3 px-4 py-2 bg-[#FFA41F] text-white rounded-lg hover:bg-[#FF8C00] transition cursor-pointer"
+          className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition cursor-pointer"
         >
           More Details
         </Link>
